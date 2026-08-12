@@ -15,11 +15,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Install project as a package
-        run: pip install -e .
+      - name: Install project and dev dependencies
+        run: pip install -e . --group dev
 
       - name: Run tests
         run: python -m pytest -v

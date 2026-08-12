@@ -2,6 +2,18 @@
 name = "churn-prediction-mlops"
 version = "0.1.0"
 requires-python = ">=3.10"
+dependencies = [
+    "mlflow==3.15.0",
+    "pandas==2.3.3",
+    "scikit-learn==1.9.0",
+    "scipy==1.18.0",
+]
+
+[dependency-groups]
+dev = [
+    "kfp==2.17.0",
+    "pytest==9.1.1",
+]
 
 [tool.setuptools]
 packages = ["src"]
