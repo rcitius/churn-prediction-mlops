@@ -8,7 +8,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY pyproject.toml .
 COPY src/ ./src/
 COPY data/ ./data/
+
+# make src an installed package, so imports work from any working directory
+RUN pip install --no-cache-dir --no-deps -e .
 
 CMD ["python", "-m", "src.predict"]
