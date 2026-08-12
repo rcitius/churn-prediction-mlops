@@ -5,3 +5,4 @@ mlruns/
 mlartifacts/
 mlflow.db
 *.egg-info/
+local_outputs

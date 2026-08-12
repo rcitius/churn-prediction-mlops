@@ -4,15 +4,11 @@ LABEL org.opencontainers.image.source=https://github.com/rcitius/churn-predictio
 
 WORKDIR /app
 
-# deps first, so this layer is cached when only code changes
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
 COPY pyproject.toml .
 COPY src/ ./src/
 COPY data/ ./data/
 
-# make src an installed package, so imports work from any working directory
-RUN pip install --no-cache-dir --no-deps -e .
+# runtime deps only — the dev group is not installed
+RUN pip install --no-cache-dir -e .
 
 CMD ["python", "-m", "src.predict"]
