@@ -8,11 +8,9 @@ from sklearn.metrics import roc_auc_score, recall_score, precision_score, f1_sco
 from src.data import load_data
 
 
-def main():
+def train_and_register(X_train, X_test, y_train, y_test):
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db"))
     mlflow.set_experiment("churn")
-
-    X_train, X_test, y_train, y_test = load_data()
 
     with mlflow.start_run():
         model = HistGradientBoostingClassifier(random_state=42)
@@ -33,6 +31,12 @@ def main():
         mlflow.sklearn.log_model(model, name="model",
                                  registered_model_name="churn-classifier",
                                  input_example=X_test[:5])
+        return roc_auc
+
+def main():
+    X_train, X_test, y_train, y_test = load_data()
+    train_and_register(X_train, X_test, y_train, y_test)
+    
 
 
 if __name__ == "__main__":
